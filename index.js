@@ -24,3 +24,5 @@ jobs.forEach((job) => {
        .submitSelfpost({title: job.title, text: job.text})
   });
 });
+
+console.log('Halloween Reddit Bot started...')
