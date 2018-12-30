@@ -34,4 +34,4 @@ jobs.forEach((job) => {
 });
 
 app.get('/', (req, res) => res.send('Halloween Reddit Bot started...'));
-app.listen(PORT || 8000, () => console.log(`App listening on port ${port}!`));
+app.listen(PORT || 8000, () => console.log(`App listening on port ${PORT}!`));
