@@ -7,7 +7,7 @@ const jobs = [
   {
     // Monday at 01:00
     schedule: ' * * 1 * * 1',
-    title: `🎃 ${days} days until Halloween! 👻'`,
+    title: `🎃 ${days} days until Halloween! 👻`,
     text: 'Bot source: http://github.com/circa10a/halloween-reddit-bot',
   },
   {
