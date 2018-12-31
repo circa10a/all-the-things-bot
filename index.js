@@ -33,7 +33,7 @@ const r = new Snoowrap({
 jobs.forEach((job) => {
   schedule.scheduleJob(job.schedule, () => {
     // Post to halloween subreddit
-    r.getSubreddit('testingground4bots')
+    r.getSubreddit('halloween')
       .submitSelfpost({ title: job.title, text: job.text });
     console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
@@ -45,4 +45,4 @@ jobs.forEach((job) => {
   PORT is auto set as an env var by heroku
 */
 app.use('/', [helmet(), routes]);
-app.listen(port, () => console.log(`App listening on port ${port}`));
+app.listen(port, () => console.log(`Listening on port ${port}`));

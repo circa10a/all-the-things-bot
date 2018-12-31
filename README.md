@@ -5,6 +5,13 @@ https://halloween-reddit-bot.herokuapp.com/
 
 ## Usage
 
+**Requires the following environment variables:**
+
+- `CLIENT_ID`
+- `CLIENT_SECRET`
+- `USERNAME`
+- `PASSWORD`
+
 ### Install dependencies
 
 ```bash
@@ -19,5 +26,5 @@ npm start
 
 ### Schedules
 
-- Every Monday at 01:00
-- Every Halloween at 01:00
+- Every Monday at 03:00
+- Every Halloween at 03:00
