@@ -1,5 +1,5 @@
 const schedule = require('node-schedule');
-const snoowrap = require('snoowrap');
+const Snoowrap = require('snoowrap');
 const express = require('express');
 const moment = require('moment');
 
@@ -18,7 +18,7 @@ checkEnvVars({
 });
 
 // Construct new connection
-const r = new snoowrap({
+const r = new Snoowrap({
   userAgent: 'halloween-bot',
   clientId: CLIENT_ID,
   clientSecret: CLIENT_SECRET,
@@ -36,5 +36,10 @@ jobs.forEach((job) => {
   });
 });
 
+/* The reason for express is to keep the free tier
+  of heroku dyno alive by using uptime robot to ping
+  the / route every 5 minutes.
+  PORT is auto set as an env var by heroku
+*/
 app.get('/', (req, res) => res.send(JSON.stringify({ info: 'Halloween Reddit Bot started', time: moment().format() })));
 app.listen(PORT || 8000, () => console.log(`App listening on port ${PORT}`));
