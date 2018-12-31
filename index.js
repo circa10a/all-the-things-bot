@@ -4,9 +4,11 @@ const express = require('express');
 const moment = require('moment');
 
 const app = express();
-const { PORT } = process.env;
+const { PORT } = process.env; // Heroku set env var
+const port = PORT || 8000; // Default to 8000 if env not set
 const { checkEnvVars } = require('./lib/check-env-vars');
 const { jobs } = require('./config/jobs');
+const { daysUntilHalloween } = require('./lib/days-until-halloween');
 
 const {
   CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD,
@@ -32,14 +34,20 @@ jobs.forEach((job) => {
     // Post to halloween subreddit
     r.getSubreddit('testingground4bots')
       .submitSelfpost({ title: job.title, text: job.text });
-    console.log(`Posted at: ${moment().format()}`);
+    console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
 });
 
 /* The reason for express is to keep the free tier
   of heroku dyno alive by using uptime robot to ping
-  the / route every 5 minutes.
+  the / route every 5 minutes. (sleeps after 30 min of inactivity)
   PORT is auto set as an env var by heroku
 */
-app.get('/', (req, res) => res.send(JSON.stringify({ info: 'Halloween Reddit Bot started', time: moment().format() })));
-app.listen(PORT || 8000, () => console.log(`App listening on port ${PORT}`));
+app.get('/', (req, res) => {
+  res.send(JSON.stringify({
+    time: moment().format('YYYY-MM-DD HH:mm:ss'),
+    daysUntilHalloween: daysUntilHalloween(moment().year()),
+  }));
+});
+
+app.listen(port, () => console.log(`App listening on port ${port}`));
