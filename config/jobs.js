@@ -1,11 +1,11 @@
 const moment = require('moment');
-const { daysUntilHalloween } = require('../lib/days-until-halloween');
+const daysUntilHalloween = require('../lib/days-until-halloween');
 
 /* The second counter is necessary for this cron scheduler
    because if just a minute is specified, the job is run for
    the entire minute. Therefore posting to reddit for 60 seconds
    until the ratelimit is reached.
-   This is another option by I prefer cron syntax
+   This is another option but I prefer cron syntax
    https://github.com/node-schedule/node-schedule#date-based-scheduling
 */
 
@@ -26,6 +26,4 @@ const jobs = [
   },
 ];
 
-module.exports = {
-  jobs,
-};
+module.exports = jobs;

@@ -2,7 +2,7 @@ const express = require('express');
 const moment = require('moment');
 
 const router = express.Router();
-const { daysUntilHalloween } = require('../lib/days-until-halloween');
+const daysUntilHalloween = require('../lib/days-until-halloween');
 
 router.get('/', (req, res) => {
   res.json({

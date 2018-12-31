@@ -8,8 +8,8 @@ const app = express();
 const { PORT } = process.env; // Heroku set env var
 const port = PORT || 8000; // Default to 8000 if env not set
 const routes = require('./routes/route');
-const { checkEnvVars } = require('./lib/check-env-vars');
-const { jobs } = require('./config/jobs');
+const checkEnvVars = require('./lib/check-env-vars');
+const jobs = require('./config/jobs');
 
 const {
   CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD,
