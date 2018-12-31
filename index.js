@@ -1,6 +1,8 @@
 const schedule = require('node-schedule');
 const snoowrap = require('snoowrap');
 const express = require('express');
+const moment = require('moment');
+
 const app = express();
 const { PORT } = process.env;
 const { checkEnvVars } = require('./lib/check-env-vars');
@@ -30,8 +32,9 @@ jobs.forEach((job) => {
     // Post to halloween subreddit
     r.getSubreddit('testingground4bots')
       .submitSelfpost({ title: job.title, text: job.text });
+    console.log(`Posted at: ${moment.format()}`);
   });
 });
 
-app.get('/', (req, res) => res.send('Halloween Reddit Bot started...'));
-app.listen(PORT || 8000, () => console.log(`App listening on port ${PORT}!`));
+app.get('/', (req, res) => res.send(`Halloween Reddit Bot started... </br> Current time: ${moment.format()}`));
+app.listen(PORT || 8000, () => console.log(`App listening on port ${PORT}`));
