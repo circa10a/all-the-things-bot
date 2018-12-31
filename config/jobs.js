@@ -1,5 +1,6 @@
 const moment = require('moment');
 const daysUntilHalloween = require('../lib/days-until-halloween');
+const randomEmoji = require('../lib/emojis');
 
 /* The second counter is necessary for this cron scheduler
    because if just a minute is specified, the job is run for
@@ -15,7 +16,7 @@ const jobs = [
     // Monday at 01:01
     schedule: ' 1 37 8 * * *',
     // Prevent immutabiltiy by using direct function call instead of storing in variable
-    title: `🎃 ${daysUntilHalloween(moment().year())} days until Halloween! 👻`,
+    title: `${randomEmoji()} ${daysUntilHalloween(moment().year())} days until Halloween! ${randomEmoji()}`,
     text: botMsg,
   },
   {
