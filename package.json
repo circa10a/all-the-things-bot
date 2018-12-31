@@ -4,7 +4,7 @@
   "description": "Bot to countdown days until halloween on /r/halloween",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint **/*.js",
+    "lint": "./node_modules/.bin/eslint *.js config/*.js lib/*.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js"
   },
