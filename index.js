@@ -33,7 +33,7 @@ const r = new Snoowrap({
 jobs.forEach((job) => {
   schedule.scheduleJob(job.schedule, () => {
     // Post to halloween subreddit
-    r.getSubreddit('halloween')
+    r.getSubreddit('testingground4bots')
       .submitSelfpost({ title: job.title, text: job.text });
     console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
