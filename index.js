@@ -30,11 +30,11 @@ const r = new Snoowrap({
 });
 
 // Create jobs
-jobs.forEach((job) => {
+jobs().forEach((job, index) => {
   schedule.scheduleJob(job.schedule, () => {
     // Post to halloween subreddit
     r.getSubreddit('testingground4bots')
-      .submitSelfpost({ title: job.title, text: job.text });
+      .submitSelfpost({ title: jobs()[index].title, text: jobs()[index].text });
     console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
 });

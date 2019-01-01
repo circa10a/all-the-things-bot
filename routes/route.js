@@ -8,8 +8,9 @@ const randomEmoji = require('../lib/emojis');
 router.get('/', (req, res) => {
   res.json({
     randomHalloweenEmoji: randomEmoji(),
-    time: moment().format('YYYY-MM-DD HH:mm:ss'),
     daysUntilHalloween: daysUntilHalloween(moment().year()),
+    time: moment().format('YYYY-MM-DD HH:mm:ss'),
+    uptime: process.uptime(),
   });
 });
 
