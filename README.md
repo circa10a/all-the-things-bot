@@ -11,6 +11,8 @@ https://halloween-reddit-bot.herokuapp.com/
 - `CLIENT_SECRET`
 - `USERNAME`
 - `PASSWORD`
+- `SUBREDDIT`
+  - e.g 'halloween'
 
 ### Install dependencies
 

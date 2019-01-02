@@ -12,12 +12,12 @@ const checkEnvVars = require('./lib/check-env-vars');
 const jobs = require('./config/jobs');
 
 const {
-  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD,
+  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD, SUBREDDIT,
 } = process.env;
 
 // Ensure all secrets are present
 checkEnvVars({
-  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD,
+  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD, SUBREDDIT,
 });
 
 // Construct new connection
@@ -33,7 +33,7 @@ const r = new Snoowrap({
 jobs().forEach((job, index) => {
   schedule.scheduleJob(job.schedule, () => {
     // Post to halloween subreddit
-    r.getSubreddit('testingground4bots')
+    r.getSubreddit(SUBREDDIT)
       .submitSelfpost({ title: jobs()[index].title, text: jobs()[index].text });
     console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
