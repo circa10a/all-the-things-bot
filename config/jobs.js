@@ -29,10 +29,9 @@ const jobs = () => [{
 },
 {
   // Halloween at 03:00
-  schedule: '0 0 3 31 09 *',
+  schedule: '0 0 3 31 10 *',
   title: '🎃 HAPPY HALLOWEEN 🎃',
   text: botMsg,
-},
-];
+}];
 
 module.exports = jobs;
