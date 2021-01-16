@@ -1,5 +1,6 @@
+
 module.exports = {
-  redditConfig: {
+  reddit: {
     halloween: {
       clientID: process.env.REDDIT_HALLOWEEN_CLIENT_ID,
       clientSecret: process.env.REDDIT_HALLOWEEN_CLIENT_SECRET,

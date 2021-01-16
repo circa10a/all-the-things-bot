@@ -1,6 +1,19 @@
 const moment = require('moment');
-const daysUntilHalloween = require('../../lib/days-until-halloween');
-const randomEmoji = require('../../lib/emojis');
+const schedule = require('node-schedule');
+const Snoowrap = require('snoowrap');
+
+const daysUntilHalloween = require('../../../lib/days-until-halloween');
+const randomEmoji = require('../../../lib/emojis');
+const log = require('../../../lib/logger');
+const { reddit } = require('../../config');
+
+const r = new Snoowrap({
+  userAgent: 'halloween-bot',
+  clientId: reddit.halloween.clientID,
+  clientSecret: reddit.halloween.clientSecret,
+  username: reddit.halloween.username,
+  password: reddit.halloween.password,
+});
 
 /* The second counter is necessary for this cron scheduler
    because if just a minute is specified, the job is run for
@@ -34,4 +47,19 @@ const jobs = () => [{
   text: botMsg,
 }];
 
-module.exports = jobs;
+const execute = () => {
+  jobs().forEach((job, index) => {
+    log.info(`Scheduling ${jobs()[index].title}`, { botType: 'reddit' });
+    schedule.scheduleJob(job.schedule, () => {
+      // Post to halloween subreddit
+      r.getSubreddit(reddit.halloween.subreddit)
+        .submitSelfpost({
+          title: jobs()[index].title,
+          text: jobs()[index].text,
+        });
+      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
+    });
+  });
+}
+
+module.exports = execute;
