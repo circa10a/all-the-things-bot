@@ -7,35 +7,34 @@ const moment = require('moment');
 const app = express();
 const { PORT } = process.env; // Heroku set env var
 const port = PORT || 8000; // Default to 8000 if env not set
+const log = require('./lib/logger');
 const routes = require('./routes/route');
-const checkEnvVars = require('./lib/check-env-vars');
-const jobs = require('./config/jobs');
+const redditJobs = require('./config/jobs/reddit');
+const { redditConfig } = require('./config/config');
 
-const {
-  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD, SUBREDDIT,
-} = process.env;
-
-// Ensure all secrets are present
-checkEnvVars({
-  CLIENT_ID, CLIENT_SECRET, USERNAME, PASSWORD, SUBREDDIT,
-});
-
+// ***************
+// REDDIT THINGS *
+// ***************
 // Construct new connection
 const r = new Snoowrap({
   userAgent: 'halloween-bot',
-  clientId: CLIENT_ID,
-  clientSecret: CLIENT_SECRET,
-  username: USERNAME,
-  password: PASSWORD,
+  clientId: redditConfig.halloween.clientID,
+  clientSecret: redditConfig.halloween.clientSecret,
+  username: redditConfig.halloween.username,
+  password: redditConfig.halloween.password,
 });
 
-// Create jobs
-jobs().forEach((job, index) => {
+// Create reddit jobs
+redditJobs().forEach((job, index) => {
+  log.info(`Scheduling ${redditJobs()[index].title}`, { botType: 'reddit' });
   schedule.scheduleJob(job.schedule, () => {
     // Post to halloween subreddit
-    r.getSubreddit(SUBREDDIT)
-      .submitSelfpost({ title: jobs()[index].title, text: jobs()[index].text });
-    console.log(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
+    r.getSubreddit(redditConfig.halloween.subreddit)
+      .submitSelfpost({
+        title: redditJobs()[index].title,
+        text: redditJobs()[index].text,
+      });
+    log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
   });
 });
 
@@ -45,4 +44,4 @@ jobs().forEach((job, index) => {
   PORT is auto set as an env var by heroku
 */
 app.use('/', [helmet(), routes]);
-app.listen(port, () => console.log(`Listening on port ${port}`));
+app.listen(port, () => log.info(`Listening on port ${port}`));

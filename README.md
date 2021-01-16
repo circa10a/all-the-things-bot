@@ -1,18 +1,8 @@
-# halloween-reddit-bot
-bot that counts down days to halloween and posts to /r/halloween.
+# all-the-things-bot
 
-https://halloween-reddit-bot.herokuapp.com/
+A monolith bot that posts all my things
 
 ## Usage
-
-**Requires the following environment variables:**
-
-- `CLIENT_ID`
-- `CLIENT_SECRET`
-- `USERNAME`
-- `PASSWORD`
-- `SUBREDDIT`
-  - e.g 'halloween'
 
 ### Install dependencies
 
@@ -26,7 +16,22 @@ npm install
 npm start
 ```
 
-### Schedules
+## Things
+
+### Halloween Reddit Bot
+
+Bot that counts down days to halloween and posts to /r/halloween.
+
+API Available hee: https://all-the-things-bot.herokuapp.com/
+
+**Requires the following environment variables:**
+
+- `REDDIT_HALLOWEEN_CLIENT_ID`
+- `REDDIT_HALLOWEEN_CLIENT_SECRET`
+- `REDDIT_HALLOWEEN_USERNAME`
+- `REDDIT_HALLOWEEN_PASSWORD`
+
+#### Schedules
 
 - Every Monday at 03:00
 - Every Halloween at 03:00

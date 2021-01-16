@@ -1,6 +1,6 @@
 const moment = require('moment');
-const daysUntilHalloween = require('../lib/days-until-halloween');
-const randomEmoji = require('../lib/emojis');
+const daysUntilHalloween = require('../../lib/days-until-halloween');
+const randomEmoji = require('../../lib/emojis');
 
 /* The second counter is necessary for this cron scheduler
    because if just a minute is specified, the job is run for
