@@ -49,7 +49,7 @@ const jobs = () => [{
 
 const execute = () => {
   jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`, { botType: 'reddit' });
+    log.info(`Scheduling ${jobs()[index].title}`, reddit.halloween.logging);
     schedule.scheduleJob(job.schedule, () => {
       // Post to halloween subreddit
       r.getSubreddit(reddit.halloween.subreddit)
@@ -57,9 +57,9 @@ const execute = () => {
           title: jobs()[index].title,
           text: jobs()[index].text,
         });
-      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`);
+      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, reddit.halloween.logging);
     });
   });
-}
+};
 
 module.exports = execute;
