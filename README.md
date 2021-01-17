@@ -2,6 +2,8 @@
 
 A monolith bot that posts all my things
 
+![alt text](https://i.imgur.com/FiNj8.jpg)
+
 ## Usage
 
 ### Install dependencies
@@ -22,6 +24,8 @@ npm start
 
 Bot that counts down days to halloween and posts to /r/halloween.
 
+<img src="https://i.imgur.com/fyLBUmT.png" height="50%" width="50%"/>
+
 API Available here: https://all-the-things-bot.herokuapp.com/
 
 **Requires the following environment variables:**
@@ -38,11 +42,13 @@ API Available here: https://all-the-things-bot.herokuapp.com/
 
 ### Free Dev Shit Twitter Bot
 
-Search for free swag opportunities on https://dev.to and post to twitter
+Search for free swag opportunities on [dev.to](https://dev.to) and post to twitter
+
+<img src="https://i.imgur.com/FOYDULy.png" height="35%" width="35%"/>
 
 #### Usage
 
-Follow me on twitter [here](https://twitter.com/FreeDevShitBot)!
+[![Twitter Follow](https://img.shields.io/twitter/follow/FreeDevShitBot?label=Follow&style=social)](https://twitter.com/FreeDevShitBot)
 
 **Requires the following environment variables:**
 
@@ -57,11 +63,11 @@ Follow me on twitter [here](https://twitter.com/FreeDevShitBot)!
 
 ### Free Dev Shit Discord Bot
 
-Search for free swag opportunities on https://dev.to and post to subscribed discord servers
+Search for free swag opportunities on [dev.to](https://dev.to) and post to subscribed discord servers
 
 #### Usage
 
-Add to your discord server by clicking [here](https://discord.com/oauth2/authorize?scope=bot&client_id=800447160340447322)!
+[![AddToDiscord](https://img.shields.io/badge/Add%20to%20Discord-📥-blue)](https://discord.com/oauth2/authorize?scope=bot&client_id=800447160340447322)
 
 > IMPORTANT NOTE: Requires channel called `swag` in your discord server
 

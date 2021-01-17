@@ -4,7 +4,7 @@ const schedule = require('node-schedule');
 
 const log = require('../../../lib/logger');
 const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
-const { discord } = require('../../config');
+const { discord: { freeDevShit } } = require('../../config');
 
 const client = new Discord.Client();
 
@@ -29,16 +29,17 @@ const postToDiscordGuilds = async () => {
   try {
     freeDevShitPosts = await getLastDayArticles();
   } catch (err) {
-    log.error(err, discord.freeDevShit.logging);
+    log.error(err, freeDevShit.logging);
   }
   if (freeDevShitPosts.length > 0) {
     const messagesToSend = [];
     const embedsToSend = buildEmbeds(freeDevShitPosts);
-    await client.login(discord.freeDevShit.token);
+    await client.login(freeDevShit.token);
     // Loop each subscribed discord server
-    client.guilds.cache.forEach(async (guild) => {
+    const discordServers = client.guilds.cache;
+    discordServers.forEach(async (server) => {
       // eslint-disable-next-line max-len
-      const swagChannel = guild.channels.cache.find((channel) => channel.name === discord.freeDevShit.channel);
+      const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);
       if (swagChannel) {
         // Loop each embed (formatted free dev shit opportunity)
         embedsToSend.forEach((embed) => {
@@ -48,9 +49,9 @@ const postToDiscordGuilds = async () => {
     });
     try {
       await Promise.all(messagesToSend);
-      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, discord.freeDevShit.logging);
+      log.info(`Posted ${messagesToSend.length} messages in ${discordServers.length} servers at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, freeDevShit.logging);
     } catch (err) {
-      log.error(err, discord.freeDevShit.logging);
+      log.error(err, freeDevShit.logging);
     }
     client.destroy();
   }
@@ -64,7 +65,7 @@ const jobs = () => [{
 
 const execute = () => {
   jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`, discord.freeDevShit.logging);
+    log.info(`Scheduling ${jobs()[index].title}`, freeDevShit.logging);
     schedule.scheduleJob(job.schedule, () => {
       // Post to discord guilds
       postToDiscordGuilds();

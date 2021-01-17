@@ -5,14 +5,14 @@ const Snoowrap = require('snoowrap');
 const daysUntilHalloween = require('../../../lib/days-until-halloween');
 const randomEmoji = require('../../../lib/emojis');
 const log = require('../../../lib/logger');
-const { reddit } = require('../../config');
+const { reddit: { halloween } } = require('../../config');
 
 const r = new Snoowrap({
   userAgent: 'halloween-bot',
-  clientId: reddit.halloween.clientID,
-  clientSecret: reddit.halloween.clientSecret,
-  username: reddit.halloween.username,
-  password: reddit.halloween.password,
+  clientId: halloween.clientID,
+  clientSecret: halloween.clientSecret,
+  username: halloween.username,
+  password: halloween.password,
 });
 
 /* The second counter is necessary for this cron scheduler
@@ -49,15 +49,15 @@ const jobs = () => [{
 
 const execute = () => {
   jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`, reddit.halloween.logging);
+    log.info(`Scheduling ${jobs()[index].title}`, halloween.logging);
     schedule.scheduleJob(job.schedule, () => {
       // Post to halloween subreddit
-      r.getSubreddit(reddit.halloween.subreddit)
+      r.getSubreddit(halloween.subreddit)
         .submitSelfpost({
           title: jobs()[index].title,
           text: jobs()[index].text,
         });
-      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, reddit.halloween.logging);
+      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, halloween.logging);
     });
   });
 };
