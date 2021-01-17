@@ -64,7 +64,7 @@ const tweet = async () => {
 
 const jobs = () => [{
   // Every day at 11:55 PM CST
-  schedule: '0 55 11 * * *',
+  schedule: '0 55 23 * * *',
   title: 'Free Dev Shit',
 }];
 
