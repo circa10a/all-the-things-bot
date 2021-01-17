@@ -8,10 +8,12 @@ const log = require('./lib/logger');
 const routes = require('./routes/route');
 
 // Import Jobs
-const redditHalloweenJob = require('./config/jobs/reddit/halloween')
+const redditHalloweenJob = require('./config/jobs/reddit/halloween');
+const twitterFreeDevShitJob = require('./config/jobs/twitter/free-dev-shit');
 
 // Start Jobs
-redditHalloweenJob()
+redditHalloweenJob();
+twitterFreeDevShitJob();
 
 /* The reason for express is to keep the free tier
   of heroku dyno alive by using uptime robot to ping
