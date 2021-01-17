@@ -40,12 +40,34 @@ API Available here: https://all-the-things-bot.herokuapp.com/
 
 Search for free swag opportunities on https://dev.to and post to twitter
 
+#### Usage
+
+Follow me on twitter [here](https://twitter.com/FreeDevShitBot)!
+
 **Requires the following environment variables:**
 
-- `TWITTER_FREEDEV_SHIT_CONSUMER_KEY`
-- `TWITTER_FREEDEV_SHIT_CONSUMER_SECRET`
-- `TWITTER_FREEDEV_SHIT_ACCESS_TOKEN`
-- `TWITTER_FREEDEV_SHIT_ACCESS_TOKEN_SECRET`
+- `TWITTER_FREEDEVSHIT_CONSUMER_KEY`
+- `TWITTER_FREEDEVSHIT_CONSUMER_SECRET`
+- `TWITTER_FREEDEVSHIT_ACCESS_TOKEN`
+- `TWITTER_FREEDEVSHIT_ACCESS_TOKEN_SECRET`
+
+#### Schedules
+
+- Every day at 11:55 PM CST
+
+### Free Dev Shit Discord Bot
+
+Search for free swag opportunities on https://dev.to and post to subscribed discord servers
+
+#### Usage
+
+Add to your discord server by clicking [here](https://discord.com/oauth2/authorize?scope=bot&client_id=800447160340447322)!
+
+> IMPORTANT NOTE: Requires channel called `swag` in your discord server
+
+**Requires the following environment variables:**
+
+- `DISCORD_FREEDEVSHIT_TOKEN`
 
 #### Schedules
 

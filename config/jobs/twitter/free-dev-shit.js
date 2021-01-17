@@ -1,34 +1,10 @@
 const Twit = require('twit');
-const fetch = require('node-fetch');
 const moment = require('moment');
 const schedule = require('node-schedule');
 
 const log = require('../../../lib/logger');
+const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { twitter } = require('../../config');
-
-const searchEndpoint = 'https://dev.to/search/feed_content?per_page=60&page=0&sort_by=published_at&sort_direction=desc&class_name=Article&search_fields=free+swag';
-
-const getSearchResults = async () => {
-  let results = {};
-  try {
-    const response = await fetch(searchEndpoint);
-    results = await response.json();
-  } catch (err) {
-    return err;
-  }
-  return results;
-};
-
-const getLastDayArticles = async () => {
-  let todaysArticles = [];
-  try {
-    const searchResults = await getSearchResults();
-    todaysArticles = searchResults.result.filter((article) => moment().diff(moment(article.published_at), 'hours') <= 24);
-  } catch (err) {
-    return err;
-  }
-  return todaysArticles;
-};
 
 const T = new Twit({
   consumer_key: twitter.freeDevShit.consumer_key,
@@ -57,6 +33,8 @@ const tweet = async () => {
     T.post('statuses/update', { status: msg }, ((err) => {
       if (err) {
         log.error(err, twitter.freeDevShit.logging);
+      } else {
+        log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, twitter.freeDevShit.logging);
       }
     }));
   }
@@ -74,7 +52,6 @@ const execute = () => {
     schedule.scheduleJob(job.schedule, () => {
       // Post to free dev shit tweet
       tweet();
-      log.info(`Posted at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, twitter.freeDevShit.logging);
     });
   });
 };
