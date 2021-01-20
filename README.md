@@ -65,6 +65,8 @@ Search for free swag opportunities on [dev.to](https://dev.to) and post to twitt
 
 Search for free swag opportunities on [dev.to](https://dev.to) and post to subscribed discord servers
 
+<img src="https://i.imgur.com/SYMoTfQ.png" height="50%" width="50%"/>
+
 #### Usage
 
 [![AddToDiscord](https://img.shields.io/badge/Add%20to%20Discord-📥-blue)](https://discord.com/oauth2/authorize?scope=bot&client_id=800447160340447322)
