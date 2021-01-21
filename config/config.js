@@ -1,6 +1,9 @@
 const { env } = process;
 
 module.exports = {
+  ping: {
+    endpoint: `https://${env.HEROKU_APP_NAME}.herokuapp.com/`,
+  },
   reddit: {
     halloween: {
       enabled: true,

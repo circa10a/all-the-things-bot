@@ -32,24 +32,24 @@ const postToDiscordGuilds = async () => {
     log.error(err, freeDevShit.logging);
   }
   if (freeDevShitPosts.length > 0) {
-    const messagesToSend = [];
+    let messagesSent = 0;
     const embedsToSend = buildEmbeds(freeDevShitPosts);
     await client.login(freeDevShit.token);
     // Loop each subscribed discord server
     const discordServers = client.guilds.cache;
-    discordServers.forEach(async (server) => {
+    discordServers.forEach((server) => {
       // eslint-disable-next-line max-len
       const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);
       if (swagChannel) {
         // Loop each embed (formatted free dev shit opportunity)
         embedsToSend.forEach((embed) => {
-          messagesToSend.push(swagChannel.send(embed));
+          swagChannel.send(embed);
+          messagesSent += 1;
         });
       }
     });
     try {
-      await Promise.all(messagesToSend);
-      log.info(`Posted ${messagesToSend.length} messages in ${discordServers.length} servers at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, freeDevShit.logging);
+      log.info(`Posted ${messagesSent} messages in ${discordServers.size} servers at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, freeDevShit.logging);
     } catch (err) {
       log.error(err, freeDevShit.logging);
     }

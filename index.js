@@ -9,11 +9,17 @@ const routes = require('./routes/route');
 const config = require('./config/config');
 
 // Import Jobs
+const selfPingJob = require('./config/jobs/runtime/selfPing');
 const redditHalloweenJob = require('./config/jobs/reddit/halloween');
 const twitterFreeDevShitJob = require('./config/jobs/twitter/free-dev-shit');
 const discordFreeDevShitJob = require('./config/jobs/discord/free-dev-shit');
 
 // Start Jobs
+
+// Needed to run on heroku for free
+// Dyno's without activity die after 30m
+selfPingJob();
+
 if (config.reddit.halloween.enabled) {
   redditHalloweenJob();
 }
@@ -25,8 +31,8 @@ if (config.discord.freeDevShit.enabled) {
 }
 
 /* The reason for express is to keep the free tier
-  of heroku dyno alive by using uptime robot to ping
-  the / route every 5 minutes. (sleeps after 30 min of inactivity)
+  of heroku dyno alive by having the bot ping itself at
+  the / route every 20 minutes. (sleeps after 30 min of inactivity)
   PORT is auto set as an env var by heroku
 */
 
