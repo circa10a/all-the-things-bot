@@ -4,7 +4,7 @@ const fetch = require('node-fetch');
 const log = require('../../../lib/logger');
 const { ping: { endpoint } } = require('../../config');
 
-const jobs = () => [{
+const jobs = [{
   // Needed to run on heroku for free
   // Dyno's without activity die after 30m
   // Every 20m ping self to keep alive
@@ -18,8 +18,8 @@ const ping = async () => {
 };
 
 const execute = () => {
-  jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`);
+  jobs.forEach((job, index) => {
+    log.info(`Scheduling ${jobs[index].title}`);
     schedule.scheduleJob(job.schedule, async () => {
       try {
         await ping();

@@ -6,6 +6,12 @@ const log = require('../../../lib/logger');
 const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { twitter: { freeDevShit } } = require('../../config');
 
+const jobs = [{
+  // Every day at 11:55 PM CST
+  schedule: '0 55 23 * * *',
+  title: 'Free Dev Shit',
+}];
+
 const T = new Twit({
   consumer_key: freeDevShit.consumer_key,
   consumer_secret: freeDevShit.consumer_secret,
@@ -40,17 +46,11 @@ const tweet = async () => {
   }
 };
 
-const jobs = () => [{
-  // Every day at 11:55 PM CST
-  schedule: '0 55 23 * * *',
-  title: 'Free Dev Shit',
-}];
-
 const execute = () => {
-  jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`, freeDevShit.logging);
+  jobs.forEach((job, index) => {
+    log.info(`Scheduling ${jobs[index].title}`, freeDevShit.logging);
     schedule.scheduleJob(job.schedule, () => {
-      // Post to free dev shit tweet
+      // Tweet free dev shit
       tweet();
     });
   });

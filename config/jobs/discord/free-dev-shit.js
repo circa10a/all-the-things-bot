@@ -6,7 +6,11 @@ const log = require('../../../lib/logger');
 const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { discord: { freeDevShit } } = require('../../config');
 
-const client = new Discord.Client();
+const jobs = [{
+  // Every day at 11:55 PM CST
+  schedule: '0 55 23 * * *',
+  title: 'Free Dev Shit',
+}];
 
 const buildEmbeds = (freeDevShitPosts) => {
   const embeds = [];
@@ -24,7 +28,7 @@ const buildEmbeds = (freeDevShitPosts) => {
   return embeds;
 };
 
-const postToDiscordGuilds = async () => {
+const postToDiscordGuilds = async (client) => {
   let freeDevShitPosts = [];
   try {
     freeDevShitPosts = await getLastDayArticles();
@@ -33,8 +37,8 @@ const postToDiscordGuilds = async () => {
   }
   if (freeDevShitPosts.length > 0) {
     let messagesSent = 0;
+    const messagesToSend = [];
     const embedsToSend = buildEmbeds(freeDevShitPosts);
-    await client.login(freeDevShit.token);
     // Loop each subscribed discord server
     const discordServers = client.guilds.cache;
     discordServers.forEach((server) => {
@@ -43,32 +47,32 @@ const postToDiscordGuilds = async () => {
       if (swagChannel) {
         // Loop each embed (formatted free dev shit opportunity)
         embedsToSend.forEach((embed) => {
-          swagChannel.send(embed);
+          messagesToSend.push(swagChannel.send(embed));
           messagesSent += 1;
         });
       }
     });
     try {
+      await Promise.allSettled(messagesToSend);
       log.info(`Posted ${messagesSent} messages in ${discordServers.size} servers at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, freeDevShit.logging);
     } catch (err) {
       log.error(err, freeDevShit.logging);
     }
-    client.destroy();
   }
 };
 
-const jobs = () => [{
-  // Every day at 11:55 PM CST
-  schedule: '0 55 23 * * *',
-  title: 'Free Dev Shit',
-}];
-
 const execute = () => {
-  jobs().forEach((job, index) => {
-    log.info(`Scheduling ${jobs()[index].title}`, freeDevShit.logging);
-    schedule.scheduleJob(job.schedule, () => {
+  jobs.forEach((job, index) => {
+    log.info(`Scheduling ${jobs[index].title}`, freeDevShit.logging);
+    schedule.scheduleJob(job.schedule, async () => {
       // Post to discord guilds
-      postToDiscordGuilds();
+      const client = new Discord.Client();
+      // Need to wait for ready
+      // Some objects(like channels) may still be undefined at the time of execution
+      await client.login(freeDevShit.token);
+      client.once('ready', () => {
+        postToDiscordGuilds(client);
+      });
     });
   });
 };
