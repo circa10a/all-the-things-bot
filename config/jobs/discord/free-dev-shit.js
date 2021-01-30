@@ -53,7 +53,12 @@ const postToDiscordGuilds = async (client) => {
       }
     });
     try {
-      await Promise.allSettled(messagesToSend);
+      const results = await Promise.allSettled(messagesToSend);
+      results.forEach((post) => {
+        if (post.status === 'rejected') {
+          log.warn(`Post failed due to: ${post.reason}`);
+        }
+      });
       log.info(`Posted ${messagesSent} messages in ${discordServers.size} servers at: ${moment().format('YYYY-MM-DD HH:mm:ss')}`, freeDevShit.logging);
     } catch (err) {
       log.error(err, freeDevShit.logging);
