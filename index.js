@@ -1,7 +1,6 @@
-const express = require('express');
-const helmet = require('helmet');
+const fastify = require('fastify')();
+const helmet = require('fastify-helmet');
 
-const app = express();
 const { PORT } = process.env; // Heroku set env var
 const port = PORT || 8000; // Default to 8000 if env not set
 const log = require('./lib/logger');
@@ -30,11 +29,13 @@ if (config.discord.freeDevShit.enabled) {
   discordFreeDevShitJob();
 }
 
-/* The reason for express is to keep the free tier
+/* The reason for the server is to keep the free tier
   of heroku dyno alive by having the bot ping itself at
   the / route every 20 minutes. (sleeps after 30 min of inactivity)
   PORT is auto set as an env var by heroku
 */
+fastify.register(helmet);
+fastify.register(routes);
+fastify.listen(port, '0.0.0.0');
 
-app.use('/', [helmet(), routes]);
-app.listen(port, () => log.info(`Listening on port ${port}`));
+log.info(`Listening on port ${port}`);
