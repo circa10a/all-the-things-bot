@@ -44,7 +44,8 @@ const postToDiscordGuilds = async (client) => {
     discordServers.forEach((server) => {
       // eslint-disable-next-line max-len
       const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);
-      if (swagChannel) {
+      // Voice channels can crash since they do not contain a 'send' function
+      if (swagChannel && swagChannel.type === 'text') {
         // Loop each embed (formatted free dev shit opportunity)
         embedsToSend.forEach((embed) => {
           messagesToSend.push(swagChannel.send(embed));
