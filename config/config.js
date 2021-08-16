@@ -2,6 +2,7 @@ const { env } = process;
 
 module.exports = {
   ping: {
+    enableListener: env.ENABLE_LISTENER || false,
     endpoint: `https://${env.HEROKU_APP_NAME}.herokuapp.com/`,
   },
   reddit: {

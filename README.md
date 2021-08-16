@@ -1,5 +1,7 @@
 # all-the-things-bot
 
+![Build Status](https://github.com/circa10a/ava/workflows/build-docker-images/badge.svg)
+
 A monolith bot that posts all my things
 
 ![alt text](https://i.imgur.com/FiNj8.jpg)
@@ -25,8 +27,6 @@ npm start
 Bot that counts down days to halloween and posts to /r/halloween.
 
 <img src="https://i.imgur.com/fyLBUmT.png" height="50%" width="50%"/>
-
-API Available here: https://all-the-things-bot.herokuapp.com/
 
 **Requires the following environment variables:**
 

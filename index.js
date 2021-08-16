@@ -15,10 +15,6 @@ const discordFreeDevShitJob = require('./config/jobs/discord/free-dev-shit');
 
 // Start Jobs
 
-// Needed to run on heroku for free
-// Dyno's without activity die after 30m
-selfPingJob();
-
 if (config.reddit.halloween.enabled) {
   redditHalloweenJob();
 }
@@ -34,8 +30,14 @@ if (config.discord.freeDevShit.enabled) {
   the / route every 20 minutes. (sleeps after 30 min of inactivity)
   PORT is auto set as an env var by heroku
 */
-fastify.register(helmet);
-fastify.register(routes);
-fastify.listen(port, '0.0.0.0');
+// Needed to run on heroku for free
+// Dyno's without activity die after 30m
+if (config.ping.enableListener) {
+  selfPingJob();
 
-log.info(`Listening on port ${port}`);
+  fastify.register(helmet);
+  fastify.register(routes);
+  fastify.listen(port, '0.0.0.0');
+
+  log.info(`Listening on port ${port}`);
+}
