@@ -45,12 +45,9 @@ const postToDiscordGuilds = async (client) => {
       // eslint-disable-next-line max-len
       const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);
       // Voice channels can crash since they do not contain a 'send' function
-      if (swagChannel && swagChannel.type === 'text') {
-        // Loop each embed (formatted free dev shit opportunity)
-        embedsToSend.forEach((embed) => {
-          messagesToSend.push(swagChannel.send(embed));
-          messagesSent += 1;
-        });
+      if (swagChannel && swagChannel.type === 'GUILD_TEXT') {
+        messagesToSend.push(swagChannel.send({ embeds: embedsToSend }));
+        messagesSent += 1;
       }
     });
     try {
@@ -72,7 +69,12 @@ const execute = () => {
     log.info(`Scheduling ${jobs[index].title}`, freeDevShit.logging);
     schedule.scheduleJob(job.schedule, async () => {
       // Post to discord guilds
-      const client = new Discord.Client();
+      const client = new Discord.Client({
+        intents: [
+          Discord.Intents.FLAGS.GUILDS,
+          Discord.Intents.FLAGS.GUILD_MESSAGES,
+        ],
+      });
       // Need to wait for ready
       // Some objects(like channels) may still be undefined at the time of execution
       await client.login(freeDevShit.token);

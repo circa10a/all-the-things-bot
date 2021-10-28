@@ -1,5 +1,5 @@
 const schedule = require('node-schedule');
-const fetch = require('node-fetch');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const log = require('../../../lib/logger');
 const { ping: { endpoint } } = require('../../config');
