@@ -1,4 +1,5 @@
 const schedule = require('node-schedule');
+// eslint-disable-next-line
 const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const log = require('../../../lib/logger');
