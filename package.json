@@ -8,9 +8,6 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node ./index.js"
   },
-  "engines": {
-    "node": "15.x"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/circa10a/all-the-things-bot.git"
@@ -19,17 +16,17 @@
   "license": "MIT",
   "dependencies": {
     "discord.js": "^13.6.0",
-    "fastify": "^3.27.0",
+    "fastify": "^3.27.1",
     "fastify-helmet": "^7.0.1",
     "moment": "^2.29.1",
     "node-fetch": "^3.2.0",
     "node-schedule": "^2.1.0",
     "snoowrap": "^1.23.0",
     "twit": "^2.2.11",
-    "winston": "^3.4.0"
+    "winston": "^3.5.1"
   },
   "devDependencies": {
-    "eslint": "^8.7.0",
+    "eslint": "^8.9.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.4"
   }
