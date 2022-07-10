@@ -1,5 +1,5 @@
 const fastify = require('fastify')();
-const helmet = require('fastify-helmet');
+const helmet = require('@fastify/helmet');
 
 const { PORT } = process.env; // Heroku set env var
 const port = PORT || 8000; // Default to 8000 if env not set
@@ -37,7 +37,7 @@ if (config.ping.enableListener) {
 
   fastify.register(helmet);
   fastify.register(routes);
-  fastify.listen(port, '0.0.0.0');
+  fastify.listen({ port, host: '0.0.0.0' });
 
   log.info(`Listening on port ${port}`);
 }
