@@ -7,7 +7,7 @@ module.exports = {
   },
   reddit: {
     halloween: {
-      enabled: true,
+      enabled: false,
       clientID: env.REDDIT_HALLOWEEN_CLIENT_ID,
       clientSecret: env.REDDIT_HALLOWEEN_CLIENT_SECRET,
       username: env.REDDIT_HALLOWEEN_USERNAME,
