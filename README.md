@@ -1,6 +1,6 @@
 # all-the-things-bot
 
-![Build Status](https://github.com/circa10a/ava/workflows/build-docker-images/badge.svg)
+![Build Status](https://github.com/circa10a/ava/workflows/publish/badge.svg)
 
 A monolith bot that posts all my things
 

@@ -1,4 +1,6 @@
-const Discord = require('discord.js');
+const {
+  Client, ChannelType, EmbedBuilder, GatewayIntentBits, MessageEmbed,
+} = require('discord.js');
 const moment = require('moment');
 const schedule = require('node-schedule');
 
@@ -15,7 +17,7 @@ const jobs = [{
 const buildEmbeds = (freeDevShitPosts) => {
   const embeds = [];
   freeDevShitPosts.forEach((post) => {
-    embeds.push(new Discord.MessageEmbed()
+    embeds.push(new EmbedBuilder()
       .setColor('#0099ff')
       .setTitle(post.title)
       .setURL(`https://dev.to${post.path}`)
@@ -45,7 +47,7 @@ const postToDiscordGuilds = async (client) => {
       // eslint-disable-next-line max-len
       const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);
       // Voice channels can crash since they do not contain a 'send' function
-      if (swagChannel && swagChannel.type === 'GUILD_TEXT') {
+      if (swagChannel && swagChannel.type === ChannelType.GuildText) {
         messagesToSend.push(swagChannel.send({ embeds: embedsToSend }));
         messagesSent += 1;
       }
@@ -69,10 +71,10 @@ const execute = () => {
     log.info(`Scheduling ${jobs[index].title}`, freeDevShit.logging);
     schedule.scheduleJob(job.schedule, async () => {
       // Post to discord guilds
-      const client = new Discord.Client({
+      const client = new Client({
         intents: [
-          Discord.Intents.FLAGS.GUILDS,
-          Discord.Intents.FLAGS.GUILD_MESSAGES,
+          GatewayIntentBits.Guilds,
+          GatewayIntentBits.GuildMessages,
         ],
       });
       // Need to wait for ready
