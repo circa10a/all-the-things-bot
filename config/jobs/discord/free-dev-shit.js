@@ -9,7 +9,7 @@ const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { discord: { freeDevShit } } = require('../../config');
 
 const jobs = [{
-  // Every day at 11:55 PM CST
+  // Every day at 11:55 PM
   schedule: '0 55 23 * * *',
   title: 'Free Dev Shit',
 }];
@@ -23,9 +23,13 @@ const buildEmbeds = (freeDevShitPosts) => {
       .setURL(`https://dev.to${post.path}`)
       .setDescription('Possible opportunity for some free dev shit! 🎉')
       .setThumbnail(post.main_image)
-      .addField('Reading Time', `${post.reading_time}m`, true)
       .setImage(post.main_image)
-      .setFooter(`Published at ${moment(post.published_timestamp).format('MMMM Do YYYY, h:mm:ss a')}`));
+      .setFooter(
+        { text: `Published on ${post.readable_publish_date}` },
+      )
+      .addFields(
+        { name: 'Reading Time', value: `${post.reading_time}m` },
+      ));
   });
   return embeds;
 };
@@ -43,6 +47,7 @@ const postToDiscordGuilds = async (client) => {
     const embedsToSend = buildEmbeds(freeDevShitPosts);
     // Loop each subscribed discord server
     const discordServers = client.guilds.cache;
+    log.info(`Found ${discordServers.length} subscribed servers`);
     discordServers.forEach((server) => {
       // eslint-disable-next-line max-len
       const swagChannel = server.channels.cache.find((channel) => channel.name === freeDevShit.channel);

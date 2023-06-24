@@ -7,7 +7,7 @@ const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { twitter: { freeDevShit } } = require('../../config');
 
 const jobs = [{
-  // Every day at 11:55 PM CST
+  // Every day at 11:55 PM
   schedule: '0 55 23 * * *',
   title: 'Free Dev Shit',
 }];
