@@ -9,8 +9,8 @@ const getLastDayArticles = require('../../../lib/free-dev-shit/search-results');
 const { discord: { freeDevShit } } = require('../../config');
 
 const jobs = [{
-  // Every day at 11:55 PM
-  schedule: '0 55 23 * * *',
+  // For PDT (UTC-7): 6:55 AM UTC
+  schedule: '0 55 6 * * *',
   title: 'Free Dev Shit',
 }];
 
